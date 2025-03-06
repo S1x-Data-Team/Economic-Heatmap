@@ -35,8 +35,8 @@ project-root/
 
 1. **Clone the repository**:
    ```sh
-   git clone https://github.com/yourusername/forex-dashboard.git
-   cd forex-dashboard
+   git clone https://github.com/yourusername/Economic-Heatmap.git
+   cd Economic-Heatmap
    ```
 
 2. **Install dependencies**:
