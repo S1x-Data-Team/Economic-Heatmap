@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Forex Economic Indicators</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+
+        .table-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+        }
+
+        .table-wrapper {
+            flex: 1 1 calc(33% - 20px);
+            min-width: 300px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 8px 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+
+        td {
+            text-align: center;
+        }
+
+        .score {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 1200px) {
+            .table-wrapper {
+                flex: 1 1 calc(50% - 20px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .table-wrapper {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Forex Economic Indicator Comparison</h1>
+    <button onclick="window.location.href='index.html'">← Back to Main</button>
+
+    <div class="table-container">
+        <!-- EUR/USD Table -->
+        <div class="table-wrapper">
+            <h2>EUR/USD</h2>
+            <table id="eur-usd-table">
+                <thead>
+                    <tr>
+                        <th>Indicator</th>
+                        <th>Trend</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <h3 id="eur-usd-score" class="score">Loading...</h3>
+        </div>
+
+        <!-- USD/JPY Table -->
+        <div class="table-wrapper">
+            <h2>USD/JPY</h2>
+            <table id="usd-jpy-table">
+                <thead>
+                    <tr>
+                        <th>Indicator</th>
+                        <th>Trend</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <h3 id="usd-jpy-score" class="score">Loading...</h3>
+        </div>
+
+        <!-- EUR/JPY Table -->
+        <div class="table-wrapper">
+            <h2>EUR/JPY</h2>
+            <table id="eur-jpy-table">
+                <thead>
+                    <tr>
+                        <th>Indicator</th>
+                        <th>Trend</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <h3 id="eur-jpy-score" class="score">Loading...</h3>
+        </div>
+
+        <!-- GBP/USD Table -->
+        <div class="table-wrapper">
+            <h2>GBP/USD</h2>
+            <table id="gbp-usd-table">
+                <thead>
+                    <tr>
+                        <th>Indicator</th>
+                        <th>Trend</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <h3 id="gbp-usd-score" class="score">Loading...</h3>
+        </div>
+
+        <!-- GBP/JPY Table -->
+        <div class="table-wrapper">
+            <h2>GBP/JPY</h2>
+            <table id="gbp-jpy-table">
+                <thead>
+                    <tr>
+                        <th>Indicator</th>
+                        <th>Trend</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <h3 id="gbp-jpy-score" class="score">Loading...</h3>
+        </div>
+    </div>
+
+    <script src="compare.js"></script>
+</body>
+</html>

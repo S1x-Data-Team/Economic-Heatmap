@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economic Data Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 20px;
+            font-size: 1.2em; /* Adjust heading size for consistency */
+        }
+
+        /* Container to hold all tables and ensure responsiveness */
+        .table-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+        }
+
+        /* Make sure each table wrapper adjusts to the width */
+        .table-wrapper {
+            flex: 1 1 calc(33% - 20px); /* Tables take up 1/3rd width minus gap */
+            min-width: 300px; /* Ensure tables don’t get too narrow */
+        }
+
+        table {
+            width: 100%; /* Make tables take up full width of their container */
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 8px 12px; /* Padding for spacing */
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+
+        td {
+            text-align: center;
+        }
+
+        /* Net change display styling */
+        .change-result {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Button styling */
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Media Queries for responsiveness */
+        @media (max-width: 1200px) {
+            .table-wrapper {
+                flex: 1 1 calc(50% - 20px); /* 2 columns for medium screens */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .table-wrapper {
+                flex: 1 1 100%; /* Full width for small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Economic Indicators</h1>
+
+    <div class="table-container">
+        <!-- United States Table -->
+        <div class="table-wrapper">
+            <h2>United States</h2>
+            <table id="US-table">
+                <thead>
+                    <tr>
+                        <th>Indicator</th>
+                        <th>Actual</th>
+                        <th>Forecast</th>
+                        <th>Change</th>
+                        <th>Previous</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <p id="US-change-result" class="change-result">Net Change: 0</p>
+        </div>
+
+        <!-- European Union Table -->
+        <div class="table-wrapper">
+            <h2>European Union</h2>
+            <table id="EU-table">
+                <thead>
+                    <tr>
+                        <th>Indicator</th>
+                        <th>Actual</th>
+                        <th>Forecast</th>
+                        <th>Change</th>
+                        <th>Previous</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <p id="EU-change-result" class="change-result">Net Change: 0</p>
+        </div>
+
+        <!-- Japan Table -->
+        <div class="table-wrapper">
+            <h2>Japan</h2>
+            <table id="JP-table">
+                <thead>
+                    <tr>
+                        <th>Indicator</th>
+                        <th>Actual</th>
+                        <th>Forecast</th>
+                        <th>Change</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <p id="JP-change-result" class="change-result">Net Change: 0</p>
+        </div>
+    </div>
+
+            <!-- UK Table -->
+            <div class="table-wrapper">
+                <h2>UK</h2>
+                <table id="UK-table">
+                    <thead>
+                        <tr>
+                            <th>Indicator</th>
+                            <th>Actual</th>
+                            <th>Forecast</th>
+                            <th>Change</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <p id="UK-change-result" class="change-result">Net Change: 0</p>
+            </div>
+        </div>
+
+    <button onclick="window.location.href='compare.html'">Compare Regions</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
