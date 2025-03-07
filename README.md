@@ -36,7 +36,7 @@ project-root/
 
 1. **Clone the repository**:
    ```sh
-   git clone https://github.com/yourusername/Economic-Heatmap.git
+   git clone https://github.com/iGridZ/Economic-Heatmap
    cd Economic-Heatmap
    ```
 
