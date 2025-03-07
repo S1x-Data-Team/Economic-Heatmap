@@ -22,9 +22,10 @@ project-root/
 │   │── styles.css          # Styling for tables and UI
 │
 │── data/
-│   │── US/                # Economic indicators for the US
-│   │── EU/                # Economic indicators for the EU
-│   │── Japan/             # Economic indicators for Japan
+│   │── EU/                # Economic indicators for EU
+│   │── JP/                # Economic indicators for JP
+│   │── US/                # Economic indicators for US
+|   |── UK/                # Economic indicators for UK
 │
 │── server.js              # Express server that fetches data & serves static files
 │── README.md              # Project documentation
