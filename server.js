@@ -86,10 +86,12 @@ async function fetchData() {
                     const existingData = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 
                     // Compare dateUTC to determine if we need to update
-                    const newDateUTC = response.data[0]?.dateUTC;
-                    const existingDateUTC = existingData[0]?.dateUTC;
+                    const newDateUTC = response.data[0].dateUtc;
+                    const existingDateUTC = existingData[0].dateUtc;
+                    console.log(existingData[0].dateUtc)
+                    //console.log(response.data[0])
 
-                    if (newDateUTC && existingDateUTC && new Date(newDateUTC) > new Date(existingDateUTC)) {
+                    if (newDateUTC != existingDateUTC) {
                         // Update file if the fetched data is more recent
                         fs.writeFileSync(filePath, JSON.stringify(response.data, null, 2));
                         console.log(`${region} - ${key} data updated to ${filePath}`);
