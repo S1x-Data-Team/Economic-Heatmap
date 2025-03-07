@@ -1,10 +1,10 @@
 # 📊 Forex Economic Indicator Dashboard
 
-A web-based dashboard that fetches and displays economic indicators for different regions (US, EU, Japan) and compares them to analyze currency pairs (EUR/USD, USD/JPY, EUR/JPY) using a scoring system.
+A web-based dashboard that fetches and displays economic indicators for different regions and compares them to analyze currency pairs using a scoring system.
 
 ## 🔹 Features
 
-- Fetches real-time economic indicators (e.g., Inflation, GDP, Retail Sales) for US, EU, and Japan
+- Fetches real-time economic indicators (e.g., Inflation, GDP, Retail Sales)
 - Displays indicators in separate tables per region
 - Compares shared indicators between regions on a dedicated page
 - Calculates a **numeric score** for each indicator comparison
@@ -49,13 +49,13 @@ project-root/
    ```sh
    node server.js
    ```
-   The app will run at: `http://localhost:3000`
+   The app will run at: `http://localhost:3420`
 
 ## 🔄 How It Works
 
 ### **1️⃣ Server (server.js)**
-- Fetches economic indicators for **US, EU, and Japan**.
-- Stores the data in region-specific folders (`data/US/`, `data/EU/`, `data/Japan/`).
+- Fetches economic indicators.
+- Stores the data in region-specific folders.
 - Serves `index.html` for viewing raw economic data per region.
 - Serves `compare.html` for **comparing shared indicators** between two regions.
 
@@ -64,7 +64,7 @@ project-root/
 - Automatically colors positive/negative deviations.
 
 ### **3️⃣ Comparison Page (compare.html + compare.js)**
-- Compares **EUR/USD, USD/JPY, EUR/JPY** using shared economic indicators.
+- Compares for example **EUR/USD, USD/JPY, EUR/JPY** using shared economic indicators.
 - Assigns **numeric scores** (`+1`, `-1`, `0`) for each indicator.
 - Displays **total score per currency pair** in color-coded format:
   - 🔵 **Positive Score** = Bullish
