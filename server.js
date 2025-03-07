@@ -88,8 +88,6 @@ async function fetchData() {
                     // Compare dateUTC to determine if we need to update
                     const newDateUTC = response.data[0].dateUtc;
                     const existingDateUTC = existingData[0].dateUtc;
-                    console.log(existingData[0].dateUtc)
-                    //console.log(response.data[0])
 
                     if (newDateUTC != existingDateUTC) {
                         // Update file if the fetched data is more recent

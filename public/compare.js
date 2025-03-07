@@ -27,25 +27,35 @@ async function compareRegions(region1, region2, tableId, scoreId, pairName) {
         if (data1.actual === null || data2.actual === null) continue;
 
         let strengthScore = 0;
-/*         if (indicator == "Unemployment") {
-            if (data1.actual < data2.actual) strengthScore = 1;
-            else if (data1.actual > data2.actual) strengthScore = -1;
+        /*         if (indicator == "Unemployment") {
+                    if (data1.actual < data2.actual) strengthScore = 1;
+                    else if (data1.actual > data2.actual) strengthScore = -1;
+                }
+                else {
+                    if (data1.actual > data2.actual) strengthScore = 1;
+                    else if (data1.actual < data2.actual) strengthScore = -1;
+                } */
+        let forecastScore1 = 0;
+        let forecastScore2 = 0;
+        if (indicator = "Unemployment") {
+
+            if (data1.actual < data1.forecast) forecastScore1 = 1;
+            else if (data1.actual > data1.forecast) forecastScore1 = -1;
+
+            if (data2.actual < data2.forecast) forecastScore2 = 1;
+            else if (data2.actual > data2.forecast) forecastScore2 = -1;
         }
         else {
-            if (data1.actual > data2.actual) strengthScore = 1;
-            else if (data1.actual < data2.actual) strengthScore = -1;
-        } */
-        let forecastScore1 = 0;
-        if (data1.actual > data1.forecast) forecastScore1 = 1;
-        else if (data1.actual < data1.forecast) forecastScore1 = -1;
 
-        let forecastScore2 = 0;
-        if (data2.actual > data2.forecast) forecastScore2 = 1;
-        else if (data2.actual < data2.forecast) forecastScore2 = -1;
+            if (data1.actual > data1.forecast) forecastScore1 = 1;
+            else if (data1.actual < data1.forecast) forecastScore1 = -1;
 
+            if (data2.actual > data2.forecast) forecastScore2 = 1;
+            else if (data2.actual < data2.forecast) forecastScore2 = -1;
+        }
 
         // Adjust strength score based on forecast beats/misses
-        const adjustedScore =forecastScore1 - forecastScore2;
+        const adjustedScore = forecastScore1 - forecastScore2;
         totalScore += adjustedScore;
 
         // Add row with adjusted score
