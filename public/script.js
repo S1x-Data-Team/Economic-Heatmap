@@ -70,7 +70,7 @@ function fetchAndDisplayData(region, tableId, resultId) {
                     }
                 }
 
-                if (indicator == "Inflation" || indicator == "CoreInflation") {
+                if (indicator == "Unemployment") {
                     if (previousChange > 0) {
                         previousCell.style.color = 'red';  // Lower than forecast
                     } else if (previousChange < 0) {
