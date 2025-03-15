@@ -1,14 +1,14 @@
 [
   {
-    "id": "c4300dcd-e8be-48e1-b46a-e1ec475f75d2",
-    "dateUtc": "2025-02-12T13:30:00Z",
-    "periodDateUtc": "2025-01-01T00:00:00Z",
-    "actual": 3.3,
+    "id": "e1171739-2014-4e97-8b40-0627e8f8b46b",
+    "dateUtc": "2025-03-12T12:30:00Z",
+    "periodDateUtc": "2025-02-01T00:00:00Z",
+    "actual": 3.1,
     "revised": null,
-    "consensus": 3.1,
-    "previous": 3.2,
-    "ratioDeviation": 3.16206,
+    "consensus": 3.2,
+    "previous": 3.3,
+    "ratioDeviation": -0.98058,
     "isPreliminary": false,
-    "isBetterThanExpected": true
+    "isBetterThanExpected": false
   }
 ]

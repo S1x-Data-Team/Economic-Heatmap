@@ -1,14 +1,14 @@
 [
   {
-    "id": "61fa56d0-0e44-4e0c-93c5-d2b2a217fe9a",
-    "dateUtc": "2025-02-12T23:50:00Z",
-    "periodDateUtc": "2025-01-01T00:00:00Z",
-    "actual": 4.2,
-    "revised": 3.9,
+    "id": "142f5a7f-e767-43cb-a787-88538f728eb7",
+    "dateUtc": "2025-03-11T23:50:00Z",
+    "periodDateUtc": "2025-02-01T00:00:00Z",
+    "actual": 4,
+    "revised": null,
     "consensus": 4,
-    "previous": 3.8,
-    "ratioDeviation": 0.6836,
+    "previous": 4.2,
+    "ratioDeviation": 0,
     "isPreliminary": false,
-    "isBetterThanExpected": true
+    "isBetterThanExpected": null
   }
 ]

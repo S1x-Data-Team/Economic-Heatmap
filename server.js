@@ -20,6 +20,7 @@ const dataSources = {
         "GDP": "https://calendar-api.fxsstatic.com/en/api/v1/events/5f64264e-5097-4359-b60f-fb9b01229068/historical?take=1",
         "CorePCE": "https://calendar-api.fxsstatic.com/en/api/v1/events/fd5a3b53-db1c-4ec4-8393-ff91ca73a272/historical?take=1",
         "Unemployment": "https://calendar-api.fxsstatic.com/en/api/v1/events/932c21fa-f664-40e1-a921-dbeb452f0081/historical?take=1",
+        "InterestRate":"https://calendar-api.fxsstatic.com/en/api/v1/events/fcfae951-09a7-449e-b6fe-525e1335aaba/historical?take=1",
     },
     EU: {
         "Inflation": "https://calendar-api.fxsstatic.com/en/api/v1/events/54334a3a-4347-40bc-8755-78f6f4ae4b9a/historical?take=1",
@@ -30,6 +31,7 @@ const dataSources = {
         "S-PMI": "https://calendar-api.fxsstatic.com/en/api/v1/events/d693560c-1a96-4409-a9d8-5979a23eaca4/historical?take=1",
         "GDP": "https://calendar-api.fxsstatic.com/en/api/v1/events/857e7a75-eb94-4ff3-a8d3-7037d3074bb5/historical?take=1",
         "Unemployment": "https://calendar-api.fxsstatic.com/en/api/v1/events/40c78644-5d06-4d87-ba5c-f2e2691cc577/historical?take=1",
+        "InterestRate":"https://calendar-api.fxsstatic.com/en/api/v1/events/8beb52bf-2294-407c-b979-8e383584a233/historical?take=1",
     },
     JP: {
         "Inflation": "https://calendar-api.fxsstatic.com/en/api/v1/events/7f15ca74-c327-4eb6-b76f-d0783f9b14e5/historical?take=1",
@@ -40,6 +42,7 @@ const dataSources = {
         "S-PMI": "https://calendar-api.fxsstatic.com/en/api/v1/events/cb7aed00-7237-40fd-8149-a0f84b67a3c4/historical?take=1",
         "GDP": "https://calendar-api.fxsstatic.com/en/api/v1/events/523c3261-8d74-4252-a3fc-cb03c3e3b0b3/historical?take=1",
         "Unemployment": "https://calendar-api.fxsstatic.com/en/api/v1/events/b892c6ef-e1d0-4944-9ee1-e28f10a0a335/historical?take=1",
+        "InterestRate":"https://calendar-api.fxsstatic.com/en/api/v1/events/8b3a0864-3ad8-4510-88a5-acaf0dc44ce0/historical?take=1",
 
     },
     UK:{
@@ -51,6 +54,7 @@ const dataSources = {
         "S-PMI": "https://calendar-api.fxsstatic.com/en/api/v1/events/0fbc81b5-a029-4c0e-a5c7-9baf1fc47cd2/historical?take=1",
         "GDP": "https://calendar-api.fxsstatic.com/en/api/v1/events/61b1d6bb-698e-41f7-8100-dc668c635c8b/historical?take=1",
         "Unemployment": "https://calendar-api.fxsstatic.com/en/api/v1/events/98bb2374-b9f9-46ae-93e3-9f7e8a4391c1/historical?take=1",
+        "InterestRate":"https://calendar-api.fxsstatic.com/en/api/v1/events/9959649d-be62-47f5-bafa-ff2f474b9e13/historical?take=1",
     }
 };
 

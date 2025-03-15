@@ -1,8 +1,8 @@
 const regions = {
-    US: ["GDP", "M-PMI", "S-PMI", "RetailSales", "CorePCE", "Inflation", "CoreInflation", "PPI", "NFP", "ADP", "JOLTS", "Unemployment"],
-    EU: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "CoreInflation", "PPI", "Unemployment"],
-    JP: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "CoreInflation", "PPI", "Unemployment"],
-    UK: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "CoreInflation", "PPI", "Unemployment"]
+    US: ["GDP", "M-PMI", "S-PMI", "RetailSales", "CorePCE", "Inflation", "CoreInflation", "PPI", "NFP", "ADP", "JOLTS", "Unemployment","InterestRate"],
+    EU: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "CoreInflation", "PPI", "Unemployment","InterestRate"],
+    JP: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "CoreInflation", "PPI", "Unemployment","InterestRate"],
+    UK: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "CoreInflation", "PPI", "Unemployment","InterestRate"]
 };
 
 async function fetchAndDisplayData(region, tableId, resultId) {
