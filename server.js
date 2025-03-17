@@ -130,7 +130,14 @@ app.get('/compare', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'compare.html'));
 });
 
-
+app.get('/refetch', async (req, res) => {
+    try {
+        await fetchData();  // Manually trigger data fetching
+        res.json({ success: true, message: 'Data refetched successfully' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Error refetching data', error: error.message });
+    }
+});
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running at http://localhost:${PORT}`);

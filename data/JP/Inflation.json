@@ -5,7 +5,7 @@
     "periodDateUtc": "2025-01-01T00:00:00Z",
     "actual": 4,
     "revised": null,
-    "consensus": null,
+    "consensus": 3.7,
     "previous": 3.6,
     "ratioDeviation": null,
     "isPreliminary": false,
