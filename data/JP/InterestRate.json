@@ -1,12 +1,12 @@
 [
   {
-    "id": "dab98628-1c08-426d-80c0-af937856a124",
-    "dateUtc": "2025-01-24T03:23:28Z",
+    "id": "9f8dd946-066d-4d18-92e5-b6d33a02921d",
+    "dateUtc": "2025-03-19T02:25:27Z",
     "periodDateUtc": null,
     "actual": 0.5,
     "revised": null,
     "consensus": 0.5,
-    "previous": 0.25,
+    "previous": 0.5,
     "ratioDeviation": 0,
     "isPreliminary": false,
     "isBetterThanExpected": null
