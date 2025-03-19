@@ -55,7 +55,17 @@ const dataSources = {
         "GDP": "https://calendar-api.fxsstatic.com/en/api/v1/events/61b1d6bb-698e-41f7-8100-dc668c635c8b/historical?take=1",
         "Unemployment": "https://calendar-api.fxsstatic.com/en/api/v1/events/98bb2374-b9f9-46ae-93e3-9f7e8a4391c1/historical?take=1",
         "InterestRate":"https://calendar-api.fxsstatic.com/en/api/v1/events/9959649d-be62-47f5-bafa-ff2f474b9e13/historical?take=1",
-    }
+    },
+    CA:{
+        "Inflation": "https://calendar-api.fxsstatic.com/en/api/v1/events/8c8f1865-334c-4976-8754-76c1e3e3b99d/historical?take=1",
+        "CoreInflation": "https://calendar-api.fxsstatic.com/en/api/v1/events/5ed90e34-d662-4c22-b5b1-3424d1bc5a30/historical?take=1",
+        "RetailSales": "https://calendar-api.fxsstatic.com/en/api/v1/events/fea0737b-54f5-439d-b6f0-b3e0452fa603/historical?take=1",
+        "M-PMI": "https://calendar-api.fxsstatic.com/en/api/v1/events/c9530a3b-8308-49d2-a5e6-b7d26cc8b075/historical?take=1",
+        "S-PMI": "https://calendar-api.fxsstatic.com/en/api/v1/events/a5bfc576-5bc8-4b9b-b9e4-1faaa0a60c90/historical?take=1",
+        "GDP": "https://calendar-api.fxsstatic.com/en/api/v1/events/6102c587-1e49-4960-8daa-dbc61505ea69/historical?take=1",
+        "Unemployment": "https://calendar-api.fxsstatic.com/en/api/v1/events/490c5492-6ace-4321-a078-64b949244b2e/historical?take=1",
+        "InterestRate":"https://calendar-api.fxsstatic.com/en/api/v1/events/7035bb7e-d65f-4e72-a0ba-f77baede0207/historical?take=1",
+    },
 };
 
 async function fetchData() {
