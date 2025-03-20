@@ -6,6 +6,31 @@ const regions = {
     CA: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "CoreInflation", "Unemployment","InterestRate"],
 };
 
+function generateRegionTables() {
+    const tableWrapper = document.getElementById("tableWrapper");
+
+    Object.keys(regions).forEach(region => {
+        const tableId = `${region}-table`;
+        const resultId = `${region}-change-result`;
+
+        const section = document.createElement("div");
+        section.classList.add("tableWrapper");
+        section.innerHTML = `
+            <h2>${region} Economic Indicators</h2>
+            <table id="${tableId}">
+                <thead>
+                    <tr><th>Indicator</th><th>Actual</th><th>Forecast</th><th>Change</th><th>Previous</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div id="${resultId}" class="score">Net Change: 0</div>
+        `;
+
+        tableWrapper.appendChild(section);
+        fetchAndDisplayData(region, tableId, resultId);
+    });
+}
+
 async function fetchAndDisplayData(region, tableId, resultId) {
     const tableBody = document.querySelector(`#${tableId} tbody`);
     if (!tableBody) {
@@ -17,7 +42,7 @@ async function fetchAndDisplayData(region, tableId, resultId) {
     let redCount = 0;
     let blueCount = 0;
 
-    for (const indicator of regions[region]) {  // Fetch indicators sequentially
+    for (const indicator of regions[region]) {
         let filePath = `/data/${region}/${indicator}.json`;
 
         try {
@@ -70,11 +95,7 @@ async function fetchAndDisplayData(region, tableId, resultId) {
             }
 
             // Color logic for previous change
-            if (indicator === "Unemployment") {
-                previousCell.style.color = previousChange > 0 ? 'red' : previousChange < 0 ? 'blue' : 'black';
-            } else {
-                previousCell.style.color = previousChange < 0 ? 'red' : previousChange > 0 ? 'blue' : 'black';
-            }
+            previousCell.style.color = previousChange < 0 ? 'red' : previousChange > 0 ? 'blue' : 'black';
 
         } catch (error) {
             console.error(`Error fetching ${region} - ${indicator}:`, error);
@@ -88,9 +109,5 @@ async function fetchAndDisplayData(region, tableId, resultId) {
     resultElement.style.color = netChange > 0 ? "blue" : netChange < 0 ? "red" : "black";
 }
 
-// Fetch data and display for each region (one at a time per region)
-fetchAndDisplayData("US", "US-table", "US-change-result");
-fetchAndDisplayData("EU", "EU-table", "EU-change-result");
-fetchAndDisplayData("JP", "JP-table", "JP-change-result");
-fetchAndDisplayData("UK", "UK-table", "UK-change-result");
-fetchAndDisplayData("CA", "CA-table", "CA-change-result");
+// Generate tables dynamically
+generateRegionTables();

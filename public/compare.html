@@ -5,76 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compare Forex Economic Indicators</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        h2 {
-            margin-top: 20px;
-            font-size: 1.2em;
-        }
-
-        #tableWrapper {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        #tableWrapper div {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            width: 300px;
-        }
-
-        table table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        th,
-        td {
-            padding: 8px 12px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f4f4f4;
-            font-weight: bold;
-        }
-
-        td {
-            text-align: center;
-        }
-
-        .score {
-            text-align: center;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        button {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <h1>Forex Economic Indicator Comparison</h1>
-    <button onclick="window.location.href='index.html'">← Back to Main</button>
+    <div id="buttonContainer">
+        <button onclick="window.location.href='index.html'">← Back to Main</button>
+    </div>
 
     <script src="compare.js"></script>
 </body>

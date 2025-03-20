@@ -1,16 +1,3 @@
-const indicators = ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "Unemployment", "InterestRate"];
-const comparisons = [
-    { region1: "EU", region2: "US", pair: "EUR/USD" },
-    { region1: "EU", region2: "JP", pair: "EUR/JPY" },
-    { region1: "EU", region2: "CA", pair: "EUR/CAD" },
-    { region1: "EU", region2: "UK", pair: "EUR/GBP" },
-    { region1: "US", region2: "CA", pair: "USD/CAD" },
-    { region1: "US", region2: "JP", pair: "USD/JPY" },
-    { region1: "UK", region2: "US", pair: "GBP/USD" },
-    { region1: "UK", region2: "CA", pair: "GBP/CAD" },
-    { region1: "UK", region2: "JP", pair: "GBP/JPY" },
-    { region1: "CA", region2: "JP", pair: "CAD/JPY" },
-]
 async function fetchIndicator(region, indicator) {
     try {
         const response = await fetch(`/data/${region}/${indicator}.json`);
@@ -26,38 +13,31 @@ async function fetchIndicator(region, indicator) {
     }
 }
 
-async function compareRegions(region1, region2, tableId, scoreId) {
-    let totalScore = 0;
-    let forecastScore1 = 0;
-    let forecastScore2 = 0;
-    const tbody = document.querySelector(`#${tableId} tbody`);
-    tbody.innerHTML = "";
+const currencyRegions = {
+    "EUR": "EU",
+    "GBP": "UK",
+    "USD": "US",
+    "CAD": "CA",
+    "JPY": "JP"
+};
 
-    for (let indicator of indicators) {
-        const data1 = await fetchIndicator(region1, indicator);
-        const data2 = await fetchIndicator(region2, indicator);
+function generateCurrencyPairs() {
+    const currencies = Object.keys(currencyRegions);
+    const pairs = [];
 
-        if (data1.actual === null || data2.actual === null) continue;
-
-        if (indicator === "Unemployment") {
-            forecastScore1 = data1.actual < data1.forecast ? 1 : data1.actual > data1.forecast ? -1 : 0;
-            forecastScore2 = data2.actual < data2.forecast ? 1 : data2.actual > data2.forecast ? -1 : 0;
-            let adjustedScore = forecastScore1 - forecastScore2;
-            totalScore += adjustedScore;
-            tbody.innerHTML += `<tr><td>${indicator}</td><td>${adjustedScore}</td></tr>`;
-        } else {
-            forecastScore1 = data1.actual > data1.forecast ? 1 : data1.actual < data1.forecast ? -1 : 0;
-            forecastScore2 = data2.actual > data2.forecast ? 1 : data2.actual < data2.forecast ? -1 : 0;
-            let adjustedScore = forecastScore1 - forecastScore2;
-            totalScore += adjustedScore;
-            tbody.innerHTML += `<tr><td>${indicator}</td><td>${adjustedScore}</td></tr>`;
+    for (let i = 0; i < currencies.length; i++) {
+        for (let j = i + 1; j < currencies.length; j++) {
+            pairs.push({
+                region1: currencyRegions[currencies[i]],
+                region2: currencyRegions[currencies[j]],
+                pair: `${currencies[i]}/${currencies[j]}`
+            });
         }
     }
-
-    let color = totalScore > 0 ? "blue" : totalScore < 0 ? "red" : "black";
-    document.getElementById(scoreId).textContent = `Total Score: ${totalScore}`;
-    document.getElementById(scoreId).style.color = color;
+    return pairs;
 }
+
+const comparisons = generateCurrencyPairs();
 
 function createComparisonTables() {
     const wrapper = document.createElement("div");
@@ -68,8 +48,9 @@ function createComparisonTables() {
         const tableId = `${region1.toLowerCase()}-${region2.toLowerCase()}-table`;
         const scoreId = `${region1.toLowerCase()}-${region2.toLowerCase()}-score`;
 
-        // Create table container
         const section = document.createElement("div");
+        section.classList.add("table-container");
+        section.dataset.score = "0"; // Store the score for sorting later
         section.innerHTML = `
             <h2>${pair} Comparison</h2>
             <table id="${tableId}">
@@ -82,12 +63,71 @@ function createComparisonTables() {
         `;
 
         wrapper.appendChild(section);
-
-        // Fetch data and populate table
         compareRegions(region1, region2, tableId, scoreId);
     });
 }
 
+async function compareRegions(region1, region2, tableId, scoreId) {
+    const tbody = document.querySelector(`#${tableId} tbody`);
+    tbody.innerHTML = "";
 
-// Generate tables and fetch data
+    let totalScore = 0;
+
+    for (let indicator of ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "Unemployment", "InterestRate"]) {
+        const data1 = await fetchIndicator(region1, indicator);
+        const data2 = await fetchIndicator(region2, indicator);
+
+        if (data1.actual === null || data2.actual === null) continue;
+
+        let score1 = 0, score2 = 0;
+
+        if (indicator === "Unemployment") {
+            // Unemployment: Lower is better
+            if (data1.actual < data1.forecast) score1 = 1;
+            else if (data1.actual > data1.forecast) score1 = -1;
+
+            if (data2.actual < data2.forecast) score2 = 1;
+            else if (data2.actual > data2.forecast) score2 = -1;
+        } else {
+            // Other indicators: Higher is better
+            if (data1.actual > data1.forecast) score1 = 1;
+            else if (data1.actual < data1.forecast) score1 = -1;
+
+            if (data2.actual > data2.forecast) score2 = 1;
+            else if (data2.actual < data2.forecast) score2 = -1;
+        }
+
+        const adjustedScore = score1 - score2;
+        totalScore += adjustedScore;
+
+        tbody.innerHTML += `<tr><td>${indicator}</td><td style="text-align: center;">${adjustedScore}</td></tr>`;
+    }
+
+    // Update the total score
+    const scoreElement = document.getElementById(scoreId);
+    scoreElement.textContent = `Total Score: ${totalScore}`;
+    scoreElement.className = `score ${totalScore > 0 ? "blue" : totalScore < 0 ? "red" : "black"}`;
+
+    // Store score for sorting
+    const tableContainer = scoreElement.closest(".table-container");
+    tableContainer.dataset.score = totalScore;
+
+    // Re-sort tables
+    sortTables();
+}
+
+
+function sortTables() {
+    const wrapper = document.getElementById("tableWrapper");
+    const tables = Array.from(wrapper.children);
+
+    tables.sort((a, b) => Number(b.dataset.score) - Number(a.dataset.score));
+
+    tables.forEach(table => wrapper.appendChild(table)); // Reorder in DOM
+}
+
+
+
+// Generate and display tables
 createComparisonTables();
+
