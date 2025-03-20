@@ -16,6 +16,7 @@ async function fetchIndicator(region, indicator) {
 const currencyRegions = {
     "EUR": "EU",
     "GBP": "UK",
+    "NZD": "NZ",
     "USD": "US",
     "CAD": "CA",
     "JPY": "JP"

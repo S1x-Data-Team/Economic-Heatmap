@@ -66,6 +66,15 @@ const dataSources = {
         "Unemployment": "https://calendar-api.fxsstatic.com/en/api/v1/events/490c5492-6ace-4321-a078-64b949244b2e/historical?take=1",
         "InterestRate":"https://calendar-api.fxsstatic.com/en/api/v1/events/7035bb7e-d65f-4e72-a0ba-f77baede0207/historical?take=1",
     },
+    NZ:{
+        "Inflation": "https://calendar-api.fxsstatic.com/en/api/v1/events/ea25453a-3b4e-4df7-9825-48c6ccdc283b/historical?take=1",
+        "RetailSales": "https://calendar-api.fxsstatic.com/en/api/v1/events/bf114b19-7364-4b25-9452-d1ccf5663590/historical?take=1",
+        "M-PMI": "https://calendar-api.fxsstatic.com/en/api/v1/events/4e7deb73-b88c-4976-901a-2a6fecf4022b/historical?take=1",
+        "S-PMI": "https://calendar-api.fxsstatic.com/en/api/v1/events/6d003fa6-82b9-4304-9ea9-1590f7db1983/historical?take=1",
+        "GDP": "https://calendar-api.fxsstatic.com/en/api/v1/events/6102c587-1e49-4960-8daa-dbc61505ea69/historical?take=1",
+        "Unemployment": "https://calendar-api.fxsstatic.com/en/api/v1/events/7bdda5c5-3034-429e-b8c0-bf331d513b8b/historical?take=1",
+        "InterestRate":"https://calendar-api.fxsstatic.com/en/api/v1/events/af0112f8-5b85-4b01-84cc-bd4b13f1e9d0/historical?take=1",
+    },
 };
 
 async function fetchData() {

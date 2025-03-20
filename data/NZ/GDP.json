@@ -1,0 +1,14 @@
+[
+  {
+    "id": "af75b651-fcee-421e-8a25-02696243b6fe",
+    "dateUtc": "2025-02-28T13:30:00Z",
+    "periodDateUtc": "2024-12-02T00:00:00Z",
+    "actual": 0.2,
+    "revised": null,
+    "consensus": 0.3,
+    "previous": -0.2,
+    "ratioDeviation": -0.70711,
+    "isPreliminary": false,
+    "isBetterThanExpected": false
+  }
+]
