@@ -1,5 +1,16 @@
-const indicators = ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "Unemployment","InterestRate"];
-
+const indicators = ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "Unemployment", "InterestRate"];
+const comparisons = [
+    { region1: "EU", region2: "US", pair: "EUR/USD" },
+    { region1: "EU", region2: "JP", pair: "EUR/JPY" },
+    { region1: "EU", region2: "CA", pair: "EUR/CAD" },
+    { region1: "EU", region2: "UK", pair: "EUR/GBP" },
+    { region1: "US", region2: "CA", pair: "USD/CAD" },
+    { region1: "US", region2: "JP", pair: "USD/JPY" },
+    { region1: "UK", region2: "US", pair: "GBP/USD" },
+    { region1: "UK", region2: "CA", pair: "GBP/CAD" },
+    { region1: "UK", region2: "JP", pair: "GBP/JPY" },
+    { region1: "CA", region2: "JP", pair: "CAD/JPY" },
+]
 async function fetchIndicator(region, indicator) {
     try {
         const response = await fetch(`/data/${region}/${indicator}.json`);
@@ -15,7 +26,7 @@ async function fetchIndicator(region, indicator) {
     }
 }
 
-async function compareRegions(region1, region2, tableId, scoreId, pairName) {
+async function compareRegions(region1, region2, tableId, scoreId) {
     let totalScore = 0;
     let forecastScore1 = 0;
     let forecastScore2 = 0;
@@ -23,87 +34,60 @@ async function compareRegions(region1, region2, tableId, scoreId, pairName) {
     tbody.innerHTML = "";
 
     for (let indicator of indicators) {
-        if (indicator == "InterestRate") {
-            const data1 = await fetchIndicator(region1, indicator);
-            const data2 = await fetchIndicator(region2, indicator);
+        const data1 = await fetchIndicator(region1, indicator);
+        const data2 = await fetchIndicator(region2, indicator);
 
-            if (data1.actual === null || data2.actual === null) continue;
+        if (data1.actual === null || data2.actual === null) continue;
 
-            let strengthScore = 0;
-            if (data1.actual > data2.actual) strengthScore = 1;
-            else if (data1.actual < data2.actual) strengthScore = -1;
-            else if (data1.actual == data2.actual) strengthScore = 0;
-
-            // Adjust strength score based on forecast beats/misses
-            const adjustedScore = strengthScore;
+        if (indicator === "Unemployment") {
+            forecastScore1 = data1.actual < data1.forecast ? 1 : data1.actual > data1.forecast ? -1 : 0;
+            forecastScore2 = data2.actual < data2.forecast ? 1 : data2.actual > data2.forecast ? -1 : 0;
+            let adjustedScore = forecastScore1 - forecastScore2;
             totalScore += adjustedScore;
-
-            // Add row with adjusted score
-            tbody.innerHTML += `<tr>
-                <td>${indicator}</td>
-                <td style="text-align: center;">${adjustedScore}</td>
-            </tr>`; 
-        }
-        else if (indicator == "Unemployment") {
-            const data1 = await fetchIndicator(region1, indicator);
-            const data2 = await fetchIndicator(region2, indicator);
-
-            if (data1.actual === null || data2.actual === null) continue;
-
-            if (data1.actual < data1.forecast) forecastScore1 = 1;
-            else if (data1.actual > data1.forecast) forecastScore1 = -1;
-            else if (data1.actual == data1.forecast) forecastScore1 = 0;
-
-            if (data2.actual < data2.forecast) forecastScore2 = 1;
-            else if (data2.actual > data2.forecast) forecastScore2 = -1;
-            else if (data2.actual == data2.forecast) forecastScore2 = 0;
-
-            // Adjust strength score based on forecast beats/misses
-            const adjustedScore = forecastScore1 - forecastScore2;
+            tbody.innerHTML += `<tr><td>${indicator}</td><td>${adjustedScore}</td></tr>`;
+        } else {
+            forecastScore1 = data1.actual > data1.forecast ? 1 : data1.actual < data1.forecast ? -1 : 0;
+            forecastScore2 = data2.actual > data2.forecast ? 1 : data2.actual < data2.forecast ? -1 : 0;
+            let adjustedScore = forecastScore1 - forecastScore2;
             totalScore += adjustedScore;
-
-            // Add row with adjusted score
-            tbody.innerHTML += `<tr>
-            <td>${indicator}</td>
-            <td style="text-align: center;">${adjustedScore}</td>
-        </tr>`;
-        }
-        else {
-            const data1 = await fetchIndicator(region1, indicator);
-            const data2 = await fetchIndicator(region2, indicator);
-
-            if (data1.actual === null || data2.actual === null) continue;
-
-            if (data1.actual > data1.forecast) forecastScore1 = 1;
-            else if (data1.actual < data1.forecast) forecastScore1 = -1;
-            else if (data1.actual == data1.forecast) forecastScore1 = 0;
-
-            if (data2.actual > data2.forecast) forecastScore2 = 1;
-            else if (data2.actual < data2.forecast) forecastScore2 = -1;
-            else if (data2.actual == data2.forecast) forecastScore2 = 0;
-
-            // Adjust strength score based on forecast beats/misses
-            const adjustedScore = forecastScore1 - forecastScore2;
-            totalScore += adjustedScore;
-
-            // Add row with adjusted score
-            tbody.innerHTML += `<tr>
-                <td>${indicator}</td>
-                <td style="text-align: center;">${adjustedScore}</td>
-            </tr>`;
+            tbody.innerHTML += `<tr><td>${indicator}</td><td>${adjustedScore}</td></tr>`;
         }
     }
 
-    // Set final score with color
     let color = totalScore > 0 ? "blue" : totalScore < 0 ? "red" : "black";
     document.getElementById(scoreId).textContent = `Total Score: ${totalScore}`;
     document.getElementById(scoreId).style.color = color;
 }
 
+function createComparisonTables() {
+    const wrapper = document.createElement("div");
+    wrapper.id = "tableWrapper";
+    document.body.appendChild(wrapper);
 
-// Compare major currency pairs
-compareRegions("EU", "US", "eur-usd-table", "eur-usd-score", "EUR/USD");
-compareRegions("US", "JP", "usd-jpy-table", "usd-jpy-score", "USD/JPY");
-compareRegions("EU", "JP", "eur-jpy-table", "eur-jpy-score", "EUR/JPY");
-compareRegions("UK", "US", "gbp-usd-table", "gbp-usd-score", "GBP/USD");
-compareRegions("UK", "JP", "gbp-jpy-table", "gbp-jpy-score", "GBP/JPY");
+    comparisons.forEach(({ region1, region2, pair }) => {
+        const tableId = `${region1.toLowerCase()}-${region2.toLowerCase()}-table`;
+        const scoreId = `${region1.toLowerCase()}-${region2.toLowerCase()}-score`;
+
+        // Create table container
+        const section = document.createElement("div");
+        section.innerHTML = `
+            <h2>${pair} Comparison</h2>
+            <table id="${tableId}">
+                <thead>
+                    <tr><th>Indicator</th><th>Score</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div id="${scoreId}" class="score">Total Score: 0</div>
+        `;
+
+        wrapper.appendChild(section);
+
+        // Fetch data and populate table
+        compareRegions(region1, region2, tableId, scoreId);
+    });
+}
+
+
+// Generate tables and fetch data
+createComparisonTables();
