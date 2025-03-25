@@ -5,6 +5,7 @@ const regions = {
     UK: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "CoreInflation", "PPI", "Unemployment","InterestRate"],
     CA: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "CoreInflation", "Unemployment","InterestRate"],
     NZ: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "Unemployment","InterestRate"],
+    AU: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "Unemployment","InterestRate"],
 };
 
 function generateRegionTables() {

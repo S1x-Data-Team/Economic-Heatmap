@@ -1,0 +1,14 @@
+[
+  {
+    "id": "4a5272a5-0231-4a16-b87f-8f4164bf26b7",
+    "dateUtc": "2025-03-23T22:00:00Z",
+    "periodDateUtc": "2025-03-01T00:00:00Z",
+    "actual": 51.2,
+    "revised": null,
+    "consensus": 50.9,
+    "previous": 50.8,
+    "ratioDeviation": null,
+    "isPreliminary": true,
+    "isBetterThanExpected": null
+  }
+]
