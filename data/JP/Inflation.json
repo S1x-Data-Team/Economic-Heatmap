@@ -1,12 +1,12 @@
 [
   {
-    "id": "197a707c-8737-4da4-88bb-2ea0ef16e06e",
-    "dateUtc": "2025-02-20T23:30:00Z",
-    "periodDateUtc": "2025-01-01T00:00:00Z",
-    "actual": 4,
+    "id": "9185c0f0-bea4-4864-98e4-a4f35aa22cff",
+    "dateUtc": "2025-03-20T23:30:00Z",
+    "periodDateUtc": "2025-02-01T00:00:00Z",
+    "actual": 3.7,
     "revised": null,
-    "consensus": 3.7,
-    "previous": 3.6,
+    "consensus": 4.2,
+    "previous": 4,
     "ratioDeviation": null,
     "isPreliminary": false,
     "isBetterThanExpected": null
