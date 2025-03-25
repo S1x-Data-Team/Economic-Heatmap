@@ -8,23 +8,25 @@ const regions = {
 };
 
 function generateRegionTables() {
-    const tableWrapper = document.getElementById("tableWrapper");
+    const tableWrapper = document.createElement("div");
+    tableWrapper.id = "tableWrapper";
+    document.body.appendChild(tableWrapper);
 
     Object.keys(regions).forEach(region => {
         const tableId = `${region}-table`;
         const resultId = `${region}-change-result`;
 
         const section = document.createElement("div");
-        section.classList.add("tableWrapper");
+        section.classList.add("table-container");
         section.innerHTML = `
-            <h2>${region} Economic Indicators</h2>
+            <h2>${region} Comparison</h2>
             <table id="${tableId}">
                 <thead>
                     <tr><th>Indicator</th><th>Actual</th><th>Forecast</th><th>Change</th><th>Previous</th></tr>
                 </thead>
                 <tbody></tbody>
             </table>
-            <div id="${resultId}" class="score">Net Change: 0</div>
+            <div id="${resultId}" class="score">Total Score: 0</div>
         `;
 
         tableWrapper.appendChild(section);

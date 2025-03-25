@@ -26,11 +26,11 @@ h2 {
 
 /* Individual table containers */
 .table-container {
+    flex-wrap: wrap;
     background: white;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
     text-align: center;
 }
 
