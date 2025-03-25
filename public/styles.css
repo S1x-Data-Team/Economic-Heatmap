@@ -112,3 +112,23 @@ tbody tr:hover {
 #buttonContainer button:hover {
     background-color: #0056b3;
 }
+
+/* Disclaimer Styling */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+}
+
+footer .disclaimer {
+    font-style: italic;
+}
+
+footer p {
+    margin: 0;
+}
