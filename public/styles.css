@@ -132,3 +132,18 @@ footer .disclaimer {
 footer p {
     margin: 0;
 }
+
+/* Explanation Styling */
+.explanation {
+    background-color: #f8f9fa;
+    padding: 15px;
+    margin: 20px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    font-style: italic;
+    text-align: center;
+}
+
+.explanation p {
+    margin: 0;
+}
