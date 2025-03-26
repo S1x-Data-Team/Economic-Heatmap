@@ -25,18 +25,13 @@ const currencyRegions = {
 
 function generateCurrencyPairs() {
     const currencies = Object.keys(currencyRegions);
-    const pairs = [];
-
-    for (let i = 0; i < currencies.length; i++) {
-        for (let j = i + 1; j < currencies.length; j++) {
-            pairs.push({
-                region1: currencyRegions[currencies[i]],
-                region2: currencyRegions[currencies[j]],
-                pair: `${currencies[i]}/${currencies[j]}`
-            });
-        }
-    }
-    return pairs;
+    return currencies.flatMap((curr, i) => 
+        currencies.slice(i + 1).map(pair => ({
+            region1: currencyRegions[curr],
+            region2: currencyRegions[pair],
+            pair: `${curr}/${pair}`
+        }))
+    );
 }
 
 const comparisons = generateCurrencyPairs();
@@ -74,36 +69,43 @@ async function compareRegions(region1, region2, tableId, scoreId) {
     tbody.innerHTML = "";
 
     let totalScore = 0;
+    const indicators = ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "Unemployment", "InterestRate"];
 
-    for (let indicator of ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "Unemployment", "InterestRate"]) {
-        const data1 = await fetchIndicator(region1, indicator);
-        const data2 = await fetchIndicator(region2, indicator);
+    // Fetch all data in parallel
+    const fetchPromises = indicators.map(indicator => 
+        Promise.all([fetchIndicator(region1, indicator), fetchIndicator(region2, indicator)])
+    );
+    const results = await Promise.all(fetchPromises);
 
-        if (data1.actual === null || data2.actual === null) continue;
+    // Create table rows in batch
+    const fragment = document.createDocumentFragment();
+
+    results.forEach(([data1, data2], index) => {
+        const indicator = indicators[index];
+        if (data1.actual === null || data2.actual === null) return;
 
         let score1 = 0, score2 = 0;
 
         if (indicator === "Unemployment") {
             // Unemployment: Lower is better
-            if (data1.actual < data1.forecast) score1 = 1;
-            else if (data1.actual > data1.forecast) score1 = -1;
-
-            if (data2.actual < data2.forecast) score2 = 1;
-            else if (data2.actual > data2.forecast) score2 = -1;
+            score1 = data1.actual < data1.forecast ? 1 : data1.actual > data1.forecast ? -1 : 0;
+            score2 = data2.actual < data2.forecast ? 1 : data2.actual > data2.forecast ? -1 : 0;
         } else {
             // Other indicators: Higher is better
-            if (data1.actual > data1.forecast) score1 = 1;
-            else if (data1.actual < data1.forecast) score1 = -1;
-
-            if (data2.actual > data2.forecast) score2 = 1;
-            else if (data2.actual < data2.forecast) score2 = -1;
+            score1 = data1.actual > data1.forecast ? 1 : data1.actual < data1.forecast ? -1 : 0;
+            score2 = data2.actual > data2.forecast ? 1 : data2.actual < data2.forecast ? -1 : 0;
         }
 
         const adjustedScore = score1 - score2;
         totalScore += adjustedScore;
 
-        tbody.innerHTML += `<tr><td>${indicator}</td><td style="text-align: center;">${adjustedScore}</td></tr>`;
-    }
+        // Create table row
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${indicator}</td><td style="text-align: center;">${adjustedScore}</td>`;
+        fragment.appendChild(row);
+    });
+
+    tbody.appendChild(fragment); // Batch update for better performance
 
     // Update the total score
     const scoreElement = document.getElementById(scoreId);
@@ -118,7 +120,6 @@ async function compareRegions(region1, region2, tableId, scoreId) {
     sortTables();
 }
 
-
 function sortTables() {
     const wrapper = document.getElementById("tableWrapper");
     const tables = Array.from(wrapper.children);
@@ -128,8 +129,5 @@ function sortTables() {
     tables.forEach(table => wrapper.appendChild(table)); // Reorder in DOM
 }
 
-
-
 // Generate and display tables
 createComparisonTables();
-

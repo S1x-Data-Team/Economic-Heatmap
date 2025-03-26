@@ -1,11 +1,11 @@
 const regions = {
-    US: ["GDP", "M-PMI", "S-PMI", "RetailSales", "CorePCE", "Inflation", "CoreInflation", "PPI", "NFP", "ADP", "JOLTS", "Unemployment","InterestRate"],
-    EU: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "CoreInflation", "PPI", "Unemployment","InterestRate"],
-    JP: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "CoreInflation", "PPI", "Unemployment","InterestRate"],
-    UK: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "CoreInflation", "PPI", "Unemployment","InterestRate"],
-    CA: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "CoreInflation", "Unemployment","InterestRate"],
-    NZ: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "Unemployment","InterestRate"],
-    AU: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "Unemployment","InterestRate"],
+    US: ["GDP", "M-PMI", "S-PMI", "RetailSales", "CorePCE", "Inflation", "CoreInflation", "PPI", "NFP", "ADP", "JOLTS", "Unemployment", "InterestRate"],
+    EU: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "CoreInflation", "PPI", "Unemployment", "InterestRate"],
+    JP: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "CoreInflation", "PPI", "Unemployment", "InterestRate"],
+    UK: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "CoreInflation", "PPI", "Unemployment", "InterestRate"],
+    CA: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "CoreInflation", "Unemployment", "InterestRate"],
+    NZ: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "Unemployment", "InterestRate"],
+    AU: ["GDP", "M-PMI", "S-PMI", "RetailSales", "Inflation", "Unemployment", "InterestRate"],
 };
 
 function generateRegionTables() {
@@ -43,74 +43,65 @@ async function fetchAndDisplayData(region, tableId, resultId) {
     }
 
     tableBody.innerHTML = ''; // Clear previous content
-    let redCount = 0;
-    let blueCount = 0;
+    let redCount = 0, blueCount = 0;
+    const indicators = regions[region];
 
-    for (const indicator of regions[region]) {
-        let filePath = `/data/${region}/${indicator}.json`;
+    // Fetch all indicators in parallel
+    const fetchPromises = indicators.map(indicator => 
+        fetch(`/data/${region}/${indicator}.json`)
+            .then(response => response.ok ? response.json() : null)
+            .then(data => ({ indicator, data }))
+            .catch(() => ({ indicator, data: null }))
+    );
 
-        try {
-            const response = await fetch(filePath);
-            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-            
-            const data = await response.json();
-            if (!Array.isArray(data) || data.length === 0) {
-                console.error(`No valid data for ${region} - ${indicator}`, data);
-                continue;
-            }
+    const results = await Promise.all(fetchPromises);
+    const fragment = document.createDocumentFragment(); // Batch DOM updates
 
-            const latest = data[0];
-            const actual = latest?.actual ?? 'N/A';
-            const forecast = latest?.consensus ?? 'N/A';
-            const previous = latest?.previous ?? 'N/A';
-            const change = (actual - forecast).toFixed(1);
-            const previousChange = (actual - previous).toFixed(1);
-
-            const row = tableBody.insertRow();
-            row.insertCell().textContent = indicator;
-            row.insertCell().textContent = actual;
-            row.insertCell().textContent = forecast;
-
-            // Change cell
-            const changeCell = row.insertCell();
-            changeCell.textContent = change;
-
-            // Previous cell
-            const previousCell = row.insertCell();
-            previousCell.textContent = previous;
-
-            // Color logic for scoring
-            if (indicator === "Unemployment") {
-                if (change > 0) {
-                    changeCell.style.color = 'red';  
-                    redCount++;
-                } else if (change < 0) {
-                    changeCell.style.color = 'blue'; 
-                    blueCount++;
-                }
-            } else {
-                if (change < 0) {
-                    changeCell.style.color = 'red';  
-                    redCount++;
-                } else if (change > 0) {
-                    changeCell.style.color = 'blue'; 
-                    blueCount++;
-                }
-            }
-
-            // Color logic for previous change
-            previousCell.style.color = previousChange < 0 ? 'red' : previousChange > 0 ? 'blue' : 'black';
-
-        } catch (error) {
-            console.error(`Error fetching ${region} - ${indicator}:`, error);
+    results.forEach(({ indicator, data }) => {
+        if (!data || !Array.isArray(data) || data.length === 0) {
+            console.error(`No valid data for ${region} - ${indicator}`, data);
+            return;
         }
-    }
+
+        const latest = data[0];
+        const actual = latest?.actual ?? 'N/A';
+        const forecast = latest?.consensus ?? 'N/A';
+        const previous = latest?.previous ?? 'N/A';
+        const change = (actual - forecast).toFixed(1);
+        const previousChange = (actual - previous).toFixed(1);
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${indicator}</td>
+            <td>${actual}</td>
+            <td>${forecast}</td>
+            <td style="color: ${getChangeColor(indicator, change)}">${change}</td>
+            <td style="color: ${previousChange < 0 ? 'red' : previousChange > 0 ? 'blue' : 'black'}">${previous}</td>
+        `;
+
+        fragment.appendChild(row);
+
+        // Update scoring
+        if (getChangeColor(indicator, change) === "red") redCount++;
+        if (getChangeColor(indicator, change) === "blue") blueCount++;
+    });
+
+    tableBody.appendChild(fragment); // Batch update for better performance
 
     // Update net change after all data is loaded
     const netChange = blueCount - redCount;
     const resultElement = document.getElementById(resultId);
     resultElement.textContent = `Net Change: ${netChange}`;
     resultElement.style.color = netChange > 0 ? "blue" : netChange < 0 ? "red" : "black";
+}
+
+// Determines change cell color based on indicator type
+function getChangeColor(indicator, change) {
+    if (indicator === "Unemployment") {
+        return change > 0 ? 'red' : change < 0 ? 'blue' : 'black';
+    } else {
+        return change < 0 ? 'red' : change > 0 ? 'blue' : 'black';
+    }
 }
 
 // Generate tables dynamically
